@@ -1,11 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>315-Days-Challenge</title>
+  <style>
+    body{
+        background-color: #121212da;
+    }
+    /* Container styles */
+    .container {
+      display: grid;
+      /* Adjust the number of columns or use auto-fill */
+      grid-template-columns: repeat(auto-fill, 30px);
+      gap: 5px;
+      justify-content: center;
+      margin-top: 50px;
+      padding-inline: 100px;
+    }
+
+    /* Box styles */
+    .box {
+      width: 30px;
+      height: 30px;
+      background-color: white;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      position: relative; /* Needed for the tooltip on hover */
+      font-size: 7px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Hover effect: light background */
+    .box:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* Tooltip using the ::after pseudo-element */
+    .box:hover::after {
+      content: attr(data-date);
+      position: absolute;
+      top: -30px;       /* Position the tooltip above the box */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 3px 5px;
+      border-radius: 3px;
+      font-size: 12px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    hr {
+    grid-column: 1 / -1;
+    width: 100% !important;
+    border: none;
+    height: 3px;
+    background-color: black;
+    margin: 10px 0;
+}
+    @media (max-width:870px){
+      .container {
+        padding-inline: 50px;
+      }
+    }
+    @media (max-width:470px){
+      .container {
+        padding-inline: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-    Hello
+<!-- <h1 style="text-align: center; color: #ff0000;">Go to Gym and workout each and everyday</h1> -->
+<div class="container" id="boxContainer"></div> 
+
+<script> 
+  const arr = [5, 40, 120, 90, 60];
+  let globalDay = 1;
+for(let i=0; i<arr.length; i++){
+  const container = document.getElementById('boxContainer');
+  const savedColors = loadBoxColors();
+  let day = 1;
+  while (day <= arr[i]) {
+    // Create a box
+    const box = document.createElement('div');
+    box.classList.add('box');
+    box.dataset.id = globalDay;
+    console.log(globalDay);
+    
+    box.textContent = `Day-${day}`
+
+    if (savedColors[globalDay]) {
+      box.style.backgroundColor = savedColors[globalDay];
+    }
+    
+    // Toggle color on click
+    box.addEventListener('click', () => {
+      const currentColor = window.getComputedStyle(box).backgroundColor;
+      const newColor = (currentColor === 'rgb(0, 192, 0)') ? 'rgb(255, 255, 255)' : 'rgb(0, 192, 0)';   
+        box.style.backgroundColor = newColor;
+        storeBoxColor(box.dataset.id, newColor);
+
+    });
+    container.appendChild(box);
+    day++;
+    globalDay++;
+  }
+
+  function storeBoxColor(boxId, color) {
+    let boxColors = JSON.parse(localStorage.getItem('boxColors315')) || {};
+    boxColors[boxId] = color;
+    localStorage.setItem('boxColors315', JSON.stringify(boxColors));
+  }
+    // Function to load stored box colors from localStorage
+    function loadBoxColors() {
+    return JSON.parse(localStorage.getItem('boxColors315')) || {};
+  }
+  let hr = document.createElement("hr");
+  document.getElementById("boxContainer").appendChild(hr);
+ 
+}
+</script>
+
 </body>
 </html>

@@ -16,7 +16,6 @@
       justify-content: center;
       margin-top: 50px;
       padding-inline: 100px;
-      /* background-color: aquamarine; */
     }
 
     /* Box styles */
@@ -96,7 +95,6 @@
     // Toggle color on click
     box.addEventListener('click', () => {
       const currentColor = window.getComputedStyle(box).backgroundColor;
-      console.log(currentColor, box.dataset.id);
       const newColor = (currentColor === 'rgb(0, 192, 0)') ? 'rgb(255, 255, 255)' : 'rgb(0, 192, 0)';   
         box.style.backgroundColor = newColor;
         storeBoxColor(box.dataset.id, newColor);
