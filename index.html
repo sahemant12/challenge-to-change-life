@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Date Boxes</title>
+  <style>
+    body{
+        background-color: #121212da;
+    }
+    /* Container styles */
+    .container {
+      display: grid;
+      /* Adjust the number of columns or use auto-fill */
+      grid-template-columns: repeat(auto-fill, 30px);
+      gap: 5px;
+      justify-content: center;
+      margin-top: 50px;
+      padding-inline: 100px;
+      /* background-color: aquamarine; */
+    }
+
+    /* Box styles */
+    .box {
+      width: 30px;
+      height: 30px;
+      background-color: white;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      position: relative; /* Needed for the tooltip on hover */
+      font-size: 7px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Hover effect: light background */
+    .box:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* Tooltip using the ::after pseudo-element */
+    .box:hover::after {
+      content: attr(data-date);
+      position: absolute;
+      top: -30px;       /* Position the tooltip above the box */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 3px 5px;
+      border-radius: 3px;
+      font-size: 12px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    @media (max-width:870px){
+      .container {
+        padding-inline: 50px;
+      }
+    }
+    @media (max-width:470px){
+      .container {
+        padding-inline: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+<h1 style="text-align: center; color: #ff0000;">Go to Gym and workout each and everyday</h1>
+<div class="container" id="boxContainer"></div>
+
+<script>
+  // Define start and end dates (months are 0-indexed in JS)
+  const startDate = new Date(2025, 1, 22); // 1 = February
+  const endDate   = new Date(2026, 1, 6); // 11 = December
+  
+  const container = document.getElementById('boxContainer');
+  const savedColors = loadBoxColors();
+  let day = 1;
+  // Iterate from startDate to endDate
+  let currentDate = startDate;
+  while (currentDate <= endDate) {
+    // Create a box
+    const box = document.createElement('div');
+    box.classList.add('box');
+    box.dataset.id = day;
+    box.textContent = `Day-${day}`
+    // Format the date as a string (e.g., "Sat Feb 22 2025")
+    const dateString = currentDate.toDateString();
+    box.setAttribute('data-date', dateString);
+
+    if (savedColors[day]) {
+      box.style.backgroundColor = savedColors[day];
+    }
+    
+    // Toggle color on click
+    box.addEventListener('click', () => {
+      const currentColor = window.getComputedStyle(box).backgroundColor;
+      console.log(currentColor, box.dataset.id);
+      const newColor = (currentColor === 'rgb(0, 192, 0)') ? 'rgb(255, 255, 255)' : 'rgb(0, 192, 0)';   
+        box.style.backgroundColor = newColor;
+        storeBoxColor(box.dataset.id, newColor);
+        // (box.style.backgroundColor === 'rgb(0, 192, 0)') ? 'rgb(255, 255, 255)' : 'rgb(0, 192, 0)';
+
+    });
+
+    // Append the box to the container
+    container.appendChild(box);
+
+    // Move to the next day
+    currentDate.setDate(currentDate.getDate() + 1);
+    day++;
+  }
+
+  function storeBoxColor(boxId, color) {
+    let boxColors = JSON.parse(localStorage.getItem('boxColors')) || {};
+    boxColors[boxId] = color;
+    localStorage.setItem('boxColors', JSON.stringify(boxColors));
+  }
+    // Function to load stored box colors from localStorage
+    function loadBoxColors() {
+    return JSON.parse(localStorage.getItem('boxColors')) || {};
+  }
+
+</script>
+
+</body>
+</html>
