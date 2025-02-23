@@ -8,7 +8,7 @@
         background-color: #121212da;
     }
     /* Container styles */
-    .container {
+    .container, #lifeChange {
       display: grid;
       /* Adjust the number of columns or use auto-fill */
       grid-template-columns: repeat(auto-fill, 30px);
@@ -16,6 +16,9 @@
       justify-content: center;
       margin-top: 50px;
       padding-inline: 100px;
+    }
+    #lifeChange{
+        margin-top: 0;
     }
 
     /* Box styles */
@@ -53,13 +56,26 @@
       pointer-events: none;
     }
     hr {
-    grid-column: 1 / -1;
-    width: 100% !important;
-    border: none;
-    height: 3px;
-    background-color: black;
-    margin: 10px 0;
-}
+        grid-column: 1 / -1;
+        width: 100% !important;
+        border: none;
+        height: 1px;
+        background-color: #c0bcbc;
+        margin: 10px 0;
+    }
+    h2{
+        grid-column: 1 / -1;
+        margin-bottom: 0;
+        color:red;
+    }
+    h3{
+        margin: 0;
+        color:rgb(11, 247, 247);
+        margin-left: 10px;
+    }
+    /* .c1-t1 h4{
+        text-decoration: line-through;
+    } */
     @media (max-width:870px){
       .container {
         padding-inline: 50px;
@@ -69,12 +85,38 @@
       .container {
         padding-inline: 20px;
       }
+
+    }
+    .tasks-list{
+        display: flex;
+        grid-column: 1 / -1;
+        flex-direction: column;
+    }
+
+    .check{
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+    }
+    #checkbox{
+        width:20px;
+        height:20px;
+    }
+    .check h4{
+        color:#04cb32;
+        font-style: italic;
+        margin-block: 7px;
+    }
+    .comm{
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
     }
   </style>
 </head>
 <body>
-<!-- <h1 style="text-align: center; color: #ff0000;">Go to Gym and workout each and everyday</h1> -->
-<div class="container" id="boxContainer"></div> 
+<div class="container" id="boxContainer"></div>
+<div id="lifeChange"></div>
 
 <script> 
   const arr = [5, 40, 120, 90, 60];
@@ -83,12 +125,14 @@ for(let i=0; i<arr.length; i++){
   const container = document.getElementById('boxContainer');
   const savedColors = loadBoxColors();
   let day = 1;
+  const h2 = document.createElement('h2');
+  h2.textContent = `${arr[i]} Days Challenge`;
+  container.appendChild(h2);
   while (day <= arr[i]) {
     // Create a box
     const box = document.createElement('div');
     box.classList.add('box');
     box.dataset.id = globalDay;
-    console.log(globalDay);
     
     box.textContent = `Day-${day}`
 
@@ -118,10 +162,178 @@ for(let i=0; i<arr.length; i++){
     function loadBoxColors() {
     return JSON.parse(localStorage.getItem('boxColors315')) || {};
   }
+
+  const task = document.createElement("div");
+  task.setAttribute("class","tasks-list");
+
+  if(arr[i]==5){
+    task.innerHTML = `<li class="check c1-t1">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>1. Complete all the backlog.</h4>
+    </li>
+    <li class="check c1-t2">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>2. Fixed your sleep cycle. Wake up at 06:00AM and Sleep at 11:00-11:30 PM</h4>
+    </li>
+    <li class="check c1-t3">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>3. No scrolling also. completely out from Social Media.</h4>
+    </li>`;
+    document.getElementById("boxContainer").appendChild(task);
+  }
+  else if(arr[i]==40){
+    task.innerHTML = `<li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>1. Complete CN, OS(with notes). Every concept on Tongue.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>2. Complete Backend with 3-4 self projects.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>3. Complete JavaScript all Concept.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>4. =></h4>
+
+        <div class="comm">
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Improve your writing skills(60%).</h4>
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Improve your listening ability(90%).</h4>
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Improve your Reading skills(60%).</h4>
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Improve your grammar(75%).</h4>
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Improve your Typing(90%)</h4>
+        </div>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>5. For this 40 Days, don't scroll even for 1 sec. Completely out from Social Media and all the distractions. Let the dopamine get normal.</h4>
+    </li>`
+    document.getElementById("boxContainer").appendChild(task);
+  }else if(arr[i]==120){
+    task.innerHTML = `<h3>1st 35 Days:</h3>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>1. Revise and learn all the concepts of React along with 3-4 projects.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>2. =></h4>
+        <div class="comm">
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Improve your writing skills(99%).</h4>
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Improve your listening ability(99%).</h4>
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Improve your Reading skills(99%).</h4>
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Improve your grammar(100%).</h4>
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Improve your Typing(100%)</h4>
+        </div>       
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>3. Bas, 1 hr SM use karna hai. 30 mins:X/LinkedIn, 30 mins:YT, only Tech Videos.</h4>
+    </li>
+    <hr>
+    <h3>Rest 85 Days:</h3>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>1. Build really good full stack projects by yourself.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>2. Complete Udemy Course(Web Development).</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>3. Learn Nextjs, advance concept, participate in Hackathon.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>4. Focus on Speaking Skills and improve it so so much that it become your power.</h4>
+    </li>`
+    document.getElementById("boxContainer").appendChild(task);
+  } else if(arr[i]==90){
+    task.innerHTML = `    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>1. Morning 2-3 hrs DSA. Solve atleast 300 ques.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>2. Get internship/freelanching projects, build advance projects and start earning.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>3. Start Contributing to the Open Source.</h4>
+    </li>`;
+    document.getElementById("boxContainer").appendChild(task);
+  }else if(arr[i]==60){
+    task.innerHTML = `    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>1. Last 60 Days to the DSA. Solve enough ques so that you become confident in it then give farewell to the DSA. If req then do else FULL FOCUS ON DEVELOPMENT.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>2. Earn enough money to buy =></h4>
+        <div class="comm">
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Tab.</h4>
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Monitor(Setup).</h4>
+            <input type="checkbox" name="" id="checkbox">
+            <h4>Sofa Chair</h4>
+        </div>       
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>3. Learn and build projects to become the best web developer.</h4>
+    </li>`;
+    document.getElementById("boxContainer").appendChild(task);
+  }
+
   let hr = document.createElement("hr");
-  document.getElementById("boxContainer").appendChild(hr);
- 
+  document.getElementById("boxContainer").appendChild(hr); 
 }
+const lifeChange = document.getElementById("lifeChange");
+const taskLife = document.createElement("div");
+taskLife.setAttribute("class","tasks-list");
+taskLife.innerHTML = `<h2>End of 315-Days-Challenge: My Life has been Change. Wow! Now</h2>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>1. Buy a Macbook for you.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>2. Buy clothes, shoes, etc for yourself.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>3. Get a AC, fully furnished, superb Flat for yourself.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>4. Aab ache ache friend banao.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>5. Bich bich mai ghumo(Break). Acha- acha restaurant mai khana khao.</h4>
+    </li>
+    <li class="check">
+        <input type="checkbox" name="" id="checkbox">
+        <h4>6. Then, make a plan what to achieve in 2026.</h4>
+    </li>`
+lifeChange.appendChild(taskLife);
+let hr = document.createElement("hr");
+lifeChange.appendChild(hr);
+    
 </script>
 
 </body>
